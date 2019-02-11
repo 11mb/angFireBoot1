@@ -1,17 +1,18 @@
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SessionService } from '../services/session.service';
 import { FirestoreObjectService } from './firestore-object.service';
 import { ModelBase } from './model-base';
+import { ISessionService } from './i-session.service';
+
 
 export abstract class BasicFormComponent<T extends ModelBase> {
 
   formGroup: FormGroup
-
+  
   object: T
 
 
-  constructor(protected type: { new(): T; }, protected objectSvc: FirestoreObjectService<T>, protected sessionSvc: SessionService, protected router: Router) {
+  constructor(protected type: { new(): T; }, protected objectSvc: FirestoreObjectService<T>, protected sessionSvc: ISessionService, protected router: Router) {
   }
 
   new() {
