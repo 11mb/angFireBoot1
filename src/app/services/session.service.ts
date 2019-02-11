@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class SessionService {
 
   showSpinner: boolean = false
-  
+
   constructor() { }
 }
+ 
