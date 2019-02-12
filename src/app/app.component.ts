@@ -15,6 +15,6 @@ export class AppComponent {
     { title: 'Products', path: '/products' }
   ]
 
-  constructor(private sessionSvc: SessionService) {
+  constructor(public sessionSvc: SessionService) {
   }
 }

@@ -11,10 +11,14 @@ import { AgGridModule } from 'ag-grid-angular';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { NgxLoadingModule } from 'ngx-loading';
+import { ProductComponent } from './product/product.component';
+import { ProductsComponent } from './products/products.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProductComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,

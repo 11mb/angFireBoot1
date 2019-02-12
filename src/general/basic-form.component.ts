@@ -1,5 +1,5 @@
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreObjectService } from './firestore-object.service';
 import { ModelBase } from './model-base';
 import { ISessionService } from './i-session.service';
@@ -8,11 +8,11 @@ import { ISessionService } from './i-session.service';
 export abstract class BasicFormComponent<T extends ModelBase> {
 
   formGroup: FormGroup
-  
+
   object: T
 
-
-  constructor(protected type: { new(): T; }, protected objectSvc: FirestoreObjectService<T>, protected sessionSvc: ISessionService, protected router: Router) {
+  constructor(protected type: { new(): T; }, protected objectSvc: FirestoreObjectService<T>, protected sessionSvc: ISessionService,
+    protected router: Router, private route: ActivatedRoute, ) {
   }
 
   new() {
@@ -29,6 +29,26 @@ export abstract class BasicFormComponent<T extends ModelBase> {
   /** Copies the data from the form group into the supplied object */
   unloadFormGroup(obj: T) {
     Object.assign(this.object, this.formGroup.value)
+  }
+
+  processParameters() {
+
+    this.route.params.subscribe(params => {
+
+      let id = params['id']
+
+      console.log(id)
+
+      if (id == 'new')
+        this.new()
+      else {
+        this.objectSvc.getById$(id).subscribe(object => {
+          this.object = object
+          this.loadFormGroup(object)
+        })
+      }
+    })
+
   }
 
 
