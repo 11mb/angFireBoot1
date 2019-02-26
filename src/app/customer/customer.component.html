@@ -1,0 +1,52 @@
+<h1 class="page-header">Customer</h1>
+<ngb-tabset>
+  <ngb-tab>
+    <ng-template ngbTabTitle>
+      <div [ngStyle]="{'color': isFormOk(generalFormGroup)?'':'red'}">
+        <i class="fas fa-address-book"></i>
+        <ng-container class="d-none d-sm-block">&nbsp; General</ng-container>
+      </div>
+    </ng-template>
+    <ng-template ngbTabContent>
+      <form [formGroup]="generalFormGroup" class="mt-4">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" required class="form-control" id="name" placeholder="A name" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="info">Info</label>
+          <textarea class="form-control" id="info" placeholder="Some info" formControlName="info"></textarea>
+        </div>
+      </form>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab>
+    <ng-template ngbTabTitle>
+      <div [ngStyle]="{'color': isFormOk(addressFormGroup)?'':'red'}">
+        <i class="fas fa-address-book"></i>
+        <ng-container class="d-none d-sm-block">&nbsp; Address</ng-container>
+      </div>
+    </ng-template>
+    <ng-template ngbTabContent>
+      <form [formGroup]="addressFormGroup" class="mt-4">
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input type="text" required class="form-control" id="street" placeholder="Street" formControlName="street">
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" required class="form-control" id="city" placeholder="City" formControlName="city">
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" required class="form-control" id="country" placeholder="Country" formControlName="country">
+        </div>
+      </form>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+
+<button class="btn btn-primary float-right" (click)="save()"
+  [disabled]="formGroup.pristine || formGroup.status != 'VALID'">Save</button>
+
+<button *ngIf="object && object.id" class="btn btn-primary float-right mr-2" (click)="delete()">Delete</button>

@@ -5,24 +5,28 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as Model from '../model';
 import { SessionService } from '../services/session.service';
 import { BasicFormComponent } from '../../general/basic-form.component';
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
+
 export class ProductComponent extends BasicFormComponent<Model.Product> implements OnInit {
-constructor(private fb: FormBuilder, productSvc: ProductService, sessionSvc: SessionService, router: Router, route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, productSvc: ProductService, sessionSvc: SessionService, router: Router, route: ActivatedRoute) {
     super(Model.Product, productSvc, sessionSvc, router, route)
   }
-ngOnInit() {
+  ngOnInit() {
     this.createFormGroup()
     this.processParameters()
   }
-createFormGroup() {
+
+  createFormGroup() {
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
       description: [''],
-      stock: [''],
+      stock: ['']
     })
   }
+
 }

@@ -86,4 +86,11 @@ export abstract class BasicFormComponent<T extends ModelBase> {
     })
   }
 
+  isFormOk(formGroup): boolean {
+    if (!formGroup)
+      return false
+
+    return (formGroup.status == 'VALID')
+  }
+
 }

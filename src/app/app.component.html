@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
 
     <div class="navbar-nav mr-auto">
-      <a class="nav-item nav-link {{item.isActive?'active':''}}" *ngFor="let item of mainMenu" routerLink="{{item.path}}">{{item.title}}</a>
+      <a class="nav-item nav-link {{item.isActive?'active':''}}" *ngFor="let item of mainMenu" routerLink="{{item.path}}" (click)="menuItemSelected(item)">{{item.title}}</a>
     </div>
   </div>
 </nav>
