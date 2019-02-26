@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as Model from '../model';
 import { Router } from '@angular/router';
-import { CustomerService } from '../services/customer.service';
 import { BasicGridComponent } from 'src/general/basic-grid.component';
 import { ProductService } from '../services/product.service';
-
 
 @Component({
   selector: 'product-grid',
@@ -25,7 +23,6 @@ export class ProductGridComponent extends BasicGridComponent<Model.Product> impl
 
   ngOnInit() {
     this.getData() 
-
   }
 
 }
