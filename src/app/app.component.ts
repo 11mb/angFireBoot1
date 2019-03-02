@@ -8,7 +8,7 @@ import { SessionService } from './services/session.service';
 })
 export class AppComponent {
   isCollapsed = true
-  title = 'ngFbBs Ultimate Form Guide';
+  title = 'Angular Form Guide';
 
   mainMenu = [
     { title: 'New product', path: '/product/new', isActive: true },
