@@ -12,9 +12,11 @@ export class AppComponent {
 
   mainMenu = [
     { title: 'New product', path: '/product/new', isActive: true },
-    { title: 'Products', path: '/product-grid' },
+    { title: 'Product grid', path: '/product-grid' },
     { title: 'New customer', path: '/customer/new' },
-    { title: 'Customers', path: '/customer-grid' }
+    { title: 'Customer grid', path: '/customer-grid' },
+    { title: 'New controls demo', path: '/controls-demo/new' },
+    { title: 'Controls demo grid', path: '/controls-demo-grid' }
   ]
 
   constructor(public sessionSvc: SessionService) {

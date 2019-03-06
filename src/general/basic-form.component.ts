@@ -4,7 +4,6 @@ import { FirestoreObjectService } from './firestore-object.service';
 import { ModelBase } from './model-base';
 import { ISessionService } from './i-session.service';
 
-
 export abstract class BasicFormComponent<T extends ModelBase> {
 
   formGroup: FormGroup
@@ -21,15 +20,46 @@ export abstract class BasicFormComponent<T extends ModelBase> {
     this.loadFormGroup(this.object)
   }
 
+
+  convertDbToUi(objDb: any): any {
+
+    return objDb
+  }
+
+  convertUiToDb(objUi: any): any {
+
+    return objUi
+  }
+
+
   /** Copies the data from the supplied object (parameter) into the form group */
   loadFormGroup(obj: T) {
-    this.formGroup.patchValue(obj)
+    let objUi = this.convertDbToUi(obj)
+    this.formGroup.patchValue(objUi)
   }
 
   /** Copies the data from the form group into the supplied object */
   unloadFormGroup(obj: T) {
-    Object.assign(this.object, this.formGroup.value)
+
+    let objUi = {}
+    Object.assign(objUi, this.formGroup.value)
+
+    let objDb = this.convertUiToDb(objUi)
+
+    Object.assign(obj, objDb)
   }
+
+
+
+
+
+
+
+
+
+
+
+
 
   processParameters() {
 

@@ -10,7 +10,7 @@ export abstract  class FirestoreObjectService<T extends ModelBase> {
 
   ref: AngularFirestoreCollection<T>
 
-  constructor(protected type: { new(): T; }, protected firestore: AngularFirestore, protected firestorePath: string) {
+  constructor(protected type: { new(): T; }, protected firestore: AngularFirestore, public firestorePath: string) {
     this.ref = this.firestore.collection<T>(this.firestorePath)
   }
 

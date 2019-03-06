@@ -3,15 +3,15 @@ import { FirestoreObjectService } from '../../general/firestore-object.service';
 import * as Model from '../model';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-
 @Injectable({
   providedIn: 'root'
 })
 
-export class Product2Service extends FirestoreObjectService<Model.Product2> {
+export class ControlsDemoService extends FirestoreObjectService<Model.ControlsDemo> {
 
   constructor(firestore: AngularFirestore) {
-    super(Model.Product2, firestore, 'product2')
+    super(Model.ControlsDemo, firestore, 'controlsDemo')
   }
 
 }
+

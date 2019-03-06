@@ -1,3 +1,3 @@
 export * from "./product"
 export * from "./customer"
-export * from "./product2"
+export * from "./controls-demo"

@@ -14,6 +14,8 @@ import { ProductComponent } from './product/product.component';
 import { ProductGridComponent } from './product-grid/product-grid.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomerGridComponent } from './customer-grid/customer-grid.component';
+import { ControlsDemoComponent } from './controls-demo/controls-demo.component';
+import { ControlsDemoGridComponent } from './controls-demo-grid/controls-demo-grid.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { CustomerGridComponent } from './customer-grid/customer-grid.component';
     ProductComponent,
     ProductGridComponent,
     CustomerComponent,
-    CustomerGridComponent
+    CustomerGridComponent,
+    ControlsDemoComponent,
+    ControlsDemoGridComponent
   ],
   imports: [
     BrowserModule,
