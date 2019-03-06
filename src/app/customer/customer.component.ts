@@ -16,7 +16,7 @@ export class CustomerComponent extends BasicFormComponent<Model.Customer> implem
 
   generalFormGroup: FormGroup
   addressFormGroup: FormGroup
-  formGroup: FormGroup
+  
 
   constructor(private fb: FormBuilder, customerSvc: CustomerService, sessionSvc: SessionService, router: Router, route: ActivatedRoute) {
        
