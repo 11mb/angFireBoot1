@@ -16,15 +16,15 @@ export class ControlsDemoGridComponent extends BasicGridComponent<Model.Controls
 
     let columnDefs = [
       { headerName: 'Is checked', field: 'isChecked', sortable: true, filter: true },
-      { headerName: 'Multi select', field: 'multiSelect', sortable: true, filter: true },
       { headerName: 'Date', field: 'date', sortable: true, filter: true },
       { headerName: 'Name', field: 'name', sortable: true, filter: true },
       { headerName: 'Password', field: 'password', sortable: true, filter: true },
       { headerName: 'Description', field: 'description', sortable: true, filter: true },
       { headerName: 'Number', field: 'number', sortable: true, filter: true },
-      { headerName: 'Single select', field: 'singleSelect', sortable: true, filter: true }]
+      { headerName: 'Single select', field: 'singleSelect', sortable: true, filter: true },
+      { headerName: 'Multi select', field: 'multiSelect', sortable: true, filter: true },
+      { headerName: 'Radio group', field: 'radio', sortable: true, filter: true }]
      
-
     super(columnDefs, router, controlsDemoSvc, '/controls-demo')
   }
 

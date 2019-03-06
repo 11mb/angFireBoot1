@@ -10,20 +10,22 @@ export class AppComponent {
   isCollapsed = true
   title = 'Angular Form Guide';
 
-  mainMenu = [
-    { title: 'New product', path: '/product/new', isActive: true },
-    { title: 'Product grid', path: '/product-grid' },
-    { title: 'New customer', path: '/customer/new' },
-    { title: 'Customer grid', path: '/customer-grid' },
-    { title: 'New controls demo', path: '/controls-demo/new' },
-    { title: 'Controls demo grid', path: '/controls-demo-grid' }
-  ]
 
   constructor(public sessionSvc: SessionService) {
+
+    let mainMenu = [
+      { id: 'productNew', title: 'New product', path: '/product/new', isActive: true },
+      { id: 'productGrid', title: 'Product grid', path: '/product-grid' },
+      { id: 'customerNew', title: 'New customer', path: '/customer/new' },
+      { id: 'customerGrid', title: 'Customer grid', path: '/customer-grid' },
+      { id: 'controlsDemoNew', title: 'New controls demo', path: '/controls-demo/new' },
+      { id: 'controlsDemoGrid', title: 'Controls demo grid', path: '/controls-demo-grid' }
+    ]
+
+    this.sessionSvc.setMenu('main', mainMenu)
+
   }
 
-  menuItemSelected(item: any) {
-    this.mainMenu.forEach(item => item.isActive = false)
-    item.isActive = true
-  }
+  
+
 }

@@ -15,8 +15,8 @@ import { ControlsDemoService } from '../services/controls-demo.service';
   templateUrl: './controls-demo.component.html',
   styleUrls: ['./controls-demo.component.scss'],
   providers: [
-    {provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter}
-   ]
+    { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }
+  ]
 })
 
 
@@ -44,7 +44,6 @@ export class ControlsDemoComponent extends BasicFormComponent<Model.ControlsDemo
       radio: ['']
     })
   }
-
 
   convertDbToUi(objDb: any): any {
     if (objDb.date) objDb.date = DateConverter.intToObject(objDb.date)
