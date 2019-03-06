@@ -32,25 +32,10 @@ export class ProductComponent extends BasicFormComponent<Model.Product> implemen
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
       description: [''],
-      stock: [''],
-      isAvailable: [''],
-      password: [''],
-      fromDate: ['']
+      stock: ['']
     })
   }
 
 
-  convertDbToUi(objDb: any): any {
-    if (objDb.fromDate) objDb.fromDate = DateConverter.intToObject(objDb.fromDate)
-
-
-    return objDb
-  }
-
-  convertUiToDb(objUi: any) : any {
-    if (objUi.fromDate) objUi.fromDate = DateConverter.objectToInt(objUi.fromDate)
-
-    return objUi
-  }
 
 }
