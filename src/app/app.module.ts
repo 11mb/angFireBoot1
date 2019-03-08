@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 // New imports:
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule }   from '@angular/forms'; // for template driven forms 
+import { ReactiveFormsModule } from '@angular/forms';   // for reactive forms 
 import { AgGridModule } from 'ag-grid-angular';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -32,6 +33,7 @@ import { ControlsDemoGridComponent } from './controls-demo-grid/controls-demo-gr
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
+    FormsModule,
     ReactiveFormsModule,
     AgGridModule.withComponents([]),
     AngularFireModule.initializeApp(environment.firebase),  

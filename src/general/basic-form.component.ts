@@ -1,25 +1,47 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreObjectService } from './firestore-object.service';
 import { ModelBase } from './model-base';
 import { ISessionService } from './i-session.service';
 
+export enum AngularFormMode {
+  Reactive,
+  TemplateDriven
+}
+
 export abstract class BasicFormComponent<T extends ModelBase> {
 
-  formGroup: FormGroup
-
+  /** the object we're editing, but we're never directly editing this object. Reactive forms: via formGroup. Template driven: via objectUi */
   object: T
 
-  constructor(protected type: { new(): T; }, protected objectSvc: FirestoreObjectService<T>, protected sessionSvc: ISessionService,
-    protected router: Router, private route: ActivatedRoute, ) {
+  formMode: AngularFormMode = AngularFormMode.TemplateDriven
+
+  /** Used by reactive forms */
+  formGroup: FormGroup
+
+  /** Used by template driven forms: this is copy of this.object (but with necessary changes for UI-binding purposes) */
+  objectUi: any
+
+  /** Only pass FormBuilder in case of reactive forms */
+  constructor(formMode: AngularFormMode, protected type: { new(): T; }, protected objectSvc: FirestoreObjectService<T>, protected sessionSvc: ISessionService,
+    protected router: Router, protected route: ActivatedRoute, protected fb: FormBuilder = null) {
+
+    this.formMode = formMode
+
+    if (this.formMode == AngularFormMode.Reactive)
+      this.createFormGroup()
   }
 
   new() {
     this.object = new this.type()
 
-    this.loadFormGroup(this.object)
+    this.load(this.object)
   }
 
+  /** override this method in case of reactive forms to initialise formGroup */
+  createFormGroup() {
+
+  }
 
   convertDbToUi(objDb: any): any {
 
@@ -31,6 +53,18 @@ export abstract class BasicFormComponent<T extends ModelBase> {
     return objUi
   }
 
+  load(object: T) {
+
+    switch (this.formMode) {
+      case AngularFormMode.Reactive:
+        this.loadFormGroup(this.object)
+        break
+      case AngularFormMode.TemplateDriven:
+        this.objectUi = this.convertDbToUi(this.object)
+        break
+    }
+
+  }
 
   /** Copies the data from the supplied object (parameter) into the form group */
   loadFormGroup(obj: T) {
@@ -50,17 +84,6 @@ export abstract class BasicFormComponent<T extends ModelBase> {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
   processParameters() {
 
     this.route.params.subscribe(params => {
@@ -74,17 +97,24 @@ export abstract class BasicFormComponent<T extends ModelBase> {
       else {
         this.objectSvc.getById$(id).subscribe(object => {
           this.object = object
-          this.loadFormGroup(object)
+
+          this.load(object)
         })
       }
     })
-
   }
 
 
   save() {
 
-    this.unloadFormGroup(this.object)
+    switch (this.formMode) {
+      case AngularFormMode.Reactive:
+        this.unloadFormGroup(this.object)
+        break
+      case AngularFormMode.TemplateDriven:
+        this.object = this.convertUiToDb(this.objectUi)
+        break
+    }
 
     console.log(this.object)
 
@@ -109,16 +139,24 @@ export abstract class BasicFormComponent<T extends ModelBase> {
 
       console.log(res)
 
+      //  let currentRoute = this.route.toString()
+
       this.sessionSvc.showSpinner = false
-      this.router.navigate(['/products'])
+
+      let editPage = this.route.snapshot.url[0].path
+      let gridPage = `/${editPage}-grid`
+
+      this.router.navigate([gridPage])
     }, err => {
       this.sessionSvc.showSpinner = false
     })
   }
 
+  /** was developed for reactive forms */
   isFormOk(formGroup): boolean {
-    if (!formGroup)
-      return false
+
+    if (!formGroup)  // in case of template driven forms
+      return true
 
     return (formGroup.status == 'VALID')
   }

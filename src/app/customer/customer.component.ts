@@ -4,7 +4,7 @@ import { ProductService } from '../services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as Model from '../model';
 import { SessionService } from '../services/session.service';
-import { BasicFormComponent } from '../../general/basic-form.component';
+import { BasicFormComponent, AngularFormMode } from '../../general/basic-form.component';
 import { CustomerService } from '../services/customer.service';
 
 @Component({
@@ -18,21 +18,18 @@ export class CustomerComponent extends BasicFormComponent<Model.Customer> implem
   addressFormGroup: FormGroup
   
 
-  constructor(private fb: FormBuilder, customerSvc: CustomerService, sessionSvc: SessionService, router: Router, route: ActivatedRoute) {
-       
-    super(Model.Customer, customerSvc, sessionSvc, router, route)
-
-    let cust = new Model.Customer()
-    console.log(cust)
+  constructor(customerSvc: CustomerService, sessionSvc: SessionService, router: Router, route: ActivatedRoute, fb: FormBuilder) {       
+    super(AngularFormMode.Reactive, Model.Customer, customerSvc, sessionSvc, router, route, fb)
 
   }
 
-  ngOnInit() {
-    this.createFormGroup()
+  ngOnInit() {    
     this.processParameters()
   }
 
+  /** will be called automatically if formMode AngularFormMode.Reactive (see above super(AngularFormMode.___) */
   createFormGroup() {
+
     this.generalFormGroup = this.fb.group({
       name: ['', Validators.required],
       info: ['']

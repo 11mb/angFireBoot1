@@ -2,22 +2,20 @@
 <form [formGroup]="formGroup">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" formControlName="name">
+    <input type="text" class="form-control" id="name" placeholder="A name" formControlName="name">
   </div>
   <div class="form-group">
     <label for="description">Description</label>
-    <textarea class="form-control" id="description" formControlName="description"></textarea>
+    <textarea class="form-control" id="description" placeholder="A description"
+      formControlName="description"></textarea>
   </div>
   <div class="form-group">
     <label for="stock">Stock</label>
-    <input type="number" class="form-control" id="stock" formControlName="stock">
+    <input type="number" class="form-control" id="stock" placeholder="The stock" formControlName="stock">
   </div>
- 
-
-
 
   <button class="btn btn-primary float-right" (click)="save()"
     [disabled]="formGroup.pristine || formGroup.status != 'VALID'">Save</button>
-  <button *ngIf="object && object.id" class="btn btn-primary float-right mr-2" (click)="delete()">Delete</button>
 
+  <button *ngIf="object && object.id" class="btn btn-primary float-right mr-2" (click)="delete()">Delete</button>
 </form>
