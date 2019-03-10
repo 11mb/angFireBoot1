@@ -1,12 +1,14 @@
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import 'rxjs/add/operator/map'
 import { plainToClass } from "class-transformer";
 import { ModelBase } from './model-base';
 import { WhereFilter } from './where-filter';
+import { IObjectDbService } from './i-object-db.service';
 
-export abstract  class FirestoreObjectService<T extends ModelBase> {
+
+export abstract class FirestoreObjectService<T extends ModelBase> implements IObjectDbService<T> {
 
   ref: AngularFirestoreCollection<T>
 
@@ -55,7 +57,8 @@ export abstract  class FirestoreObjectService<T extends ModelBase> {
   }
 
   delete(id: string): Promise<void> {
-    return this.ref.doc(id).delete()
+    let prom = this.ref.doc(id).delete()
+    return prom
   }
 
   /* Method will also work with ordinary objects, the id will always be removed

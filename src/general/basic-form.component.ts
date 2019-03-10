@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreObjectService } from './firestore-object.service';
 import { ModelBase } from './model-base';
 import { ISessionService } from './i-session.service';
+import { IObjectDbService } from './i-object-db.service';
+import { first, take } from 'rxjs/operators';
 
 export enum AngularFormMode {
   Reactive,
@@ -11,10 +13,11 @@ export enum AngularFormMode {
 
 export abstract class BasicFormComponent<T extends ModelBase> {
 
+  /** supported form modes: Reactive & Template driven */  
+  formMode: AngularFormMode = AngularFormMode.Reactive
+
   /** the object we're editing, but we're never directly editing this object. Reactive forms: via formGroup. Template driven: via objectUi */
   object: T
-
-  formMode: AngularFormMode = AngularFormMode.TemplateDriven
 
   /** Used by reactive forms */
   formGroup: FormGroup
@@ -23,7 +26,7 @@ export abstract class BasicFormComponent<T extends ModelBase> {
   objectUi: any
 
   /** Only pass FormBuilder in case of reactive forms */
-  constructor(formMode: AngularFormMode, protected type: { new(): T; }, protected objectSvc: FirestoreObjectService<T>, protected sessionSvc: ISessionService,
+  constructor(formMode: AngularFormMode, protected type: { new(): T; }, protected objectSvc: IObjectDbService<T>, protected sessionSvc: ISessionService,
     protected router: Router, protected route: ActivatedRoute, protected fb: FormBuilder = null) {
 
     this.formMode = formMode
@@ -53,26 +56,27 @@ export abstract class BasicFormComponent<T extends ModelBase> {
     return objUi
   }
 
+  /* Makes object available for binding: reactive forms = copy data into formgroup / template forms = copy data to object 'objectUi' */
   load(object: T) {
 
     switch (this.formMode) {
       case AngularFormMode.Reactive:
-        this.loadFormGroup(this.object)
+        this.loadFormGroup(object)
         break
       case AngularFormMode.TemplateDriven:
-        this.objectUi = this.convertDbToUi(this.object)
+        this.objectUi = this.convertDbToUi(object)
         break
     }
 
   }
 
-  /** Copies the data from the supplied object (parameter) into the form group */
+  /** Reactive forms only: copies the data from the supplied object (parameter) into the form group */
   loadFormGroup(obj: T) {
     let objUi = this.convertDbToUi(obj)
     this.formGroup.patchValue(objUi)
   }
 
-  /** Copies the data from the form group into the supplied object */
+  /** Reactive forms only: copies the data from the form group into the supplied object */
   unloadFormGroup(obj: T) {
 
     let objUi = {}
@@ -97,7 +101,6 @@ export abstract class BasicFormComponent<T extends ModelBase> {
       else {
         this.objectSvc.getById$(id).subscribe(object => {
           this.object = object
-
           this.load(object)
         })
       }

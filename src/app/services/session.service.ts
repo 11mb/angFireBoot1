@@ -4,6 +4,7 @@ import { ISessionService } from 'src/general/i-session.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class SessionService implements ISessionService {
 
   /** A full screen spinner will be shown when true */
