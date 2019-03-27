@@ -13,7 +13,7 @@ export enum AngularFormMode {
 
 export abstract class BasicFormComponent<T extends ModelBase> {
 
-  /** supported form modes: Reactive & Template driven */  
+  /** supported form modes: Reactive & Template driven */
   formMode: AngularFormMode = AngularFormMode.Reactive
 
   /** the object we're editing, but we're never directly editing this object. Reactive forms: via formGroup. Template driven: via objectUi */
@@ -100,8 +100,17 @@ export abstract class BasicFormComponent<T extends ModelBase> {
         this.new()
       else {
         this.objectSvc.getById$(id).subscribe(object => {
-          this.object = object
-          this.load(object)
+
+          if (object.id == 'object-not-found') {
+
+            let editPage = this.route.snapshot.url[0].path
+            this.router.navigate([`/${editPage}/new`])
+
+          } else {
+            this.object = object
+            this.load(object)
+          }
+
         })
       }
     })

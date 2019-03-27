@@ -40,6 +40,40 @@ export abstract class FirestoreObjectService<T extends ModelBase> implements IOb
   }
 
   snapshotDocToClass(snapshotDoc): T {
+
+    if (snapshotDoc != null && snapshotDoc.exists) {
+
+      // object exists
+
+      const obj = {
+
+        id: snapshotDoc.id,
+
+        ...(snapshotDoc.data() as unknown)
+
+      };
+
+      const typed = plainToClass(this.type, obj);
+
+      return typed;
+
+    } else {
+
+      // object doesn’t exist
+
+      const obj = { id: 'object-not-found' };
+      const typed = plainToClass(this.type, obj);
+      return typed;
+
+    }
+
+
+
+  }
+
+
+
+  snapshotDocToClassOld(snapshotDoc): T {
     let obj = {
       id: snapshotDoc.id,
       ...(snapshotDoc.data() as unknown)
